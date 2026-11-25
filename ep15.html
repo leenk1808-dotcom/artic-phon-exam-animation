@@ -97,7 +97,7 @@ svg text{font-family:"Pretendard","Malgun Gothic","Apple SD Gothic Neo","Noto Sa
 .stair{position:absolute;width:166px;border-radius:18px 18px 6px 6px;background:#fff;border:3px solid #ead9bd;padding:10px 10px;text-align:center;box-shadow:0 6px 16px rgba(120,80,30,.12)}.stair.on{border-color:#f08a24;box-shadow:0 0 0 6px rgba(240,138,36,.18)}
 .stair .sn{color:#fff;font-size:22px;font-weight:900;border-radius:12px;padding:4px 0}.stair .sd{font-size:17px;font-weight:800;color:#3a2f24;margin-top:6px}.stair .se{font-size:15px;color:#6f6252;margin-top:6px;line-height:1.35}
 .dgrid{display:grid;grid-template-columns:1fr 1fr;gap:4px 30px;font-size:20px;color:#4a3f33}.dgrid b{color:#e8781e}
-.imgbox .vibw{position:absolute;inset:0;pointer-events:none;z-index:1}.imgbox img.vib{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover}.imgbox .lb{z-index:3}.imgbox .zone{z-index:3}.imgbox .ecap{z-index:4}.imgbox svg{z-index:2}
+.imgbox .vibw{position:absolute;inset:0;pointer-events:none;z-index:1}.imgbox img.vib{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover}.imgbox .lb{z-index:3}.imgbox .zone{z-index:3}.imgbox .ebw{position:absolute;left:0;top:30px;width:100%;height:36px;z-index:5}.ebw .ec{position:absolute;top:0;height:36px;display:flex;align-items:center;justify-content:center;gap:6px;background:rgba(255,253,247,.94);border-bottom:3px solid}.ebw .es{font-size:18px;font-weight:900;white-space:nowrap;padding:2px 10px;border-radius:10px;opacity:.15;transition:opacity .25s,background .25s,color .25s,transform .25s}.ebw .es.show{opacity:1}.ebw .es.on{color:#fff!important;transform:scale(1.1)}.ebw .ec.in{gap:2px}.ebw .ec.in .es{font-size:15px;padding:2px 5px}.ebw .ar{font-weight:900;opacity:.5}.ecap{z-index:4}.imgbox svg{z-index:2}
 .ecap{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);background:rgba(58,47,36,.86);color:#fff;font-size:20px;font-weight:800;padding:6px 18px;border-radius:14px;white-space:nowrap}
 .ossc{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.ossc span{font-size:20px;font-weight:800;color:#3a2f24;background:#fff;border:3px solid #ead9bd;border-radius:14px;padding:6px 12px;transition:background .2s}.ossc span.on{background:#f08a24;border-color:#f08a24;color:#fff}.ossc b{color:#e8781e;font-size:20px}
 .scr{background:#1d2731;border:4px solid #3b4a55;border-radius:18px;box-shadow:0 10px 26px rgba(0,0,0,.25);overflow:hidden}.scr .sbar{height:34px;display:flex;align-items:center;gap:6px;padding:0 14px;color:#9fd3ff;font-size:16px;font-weight:800;background:#25323d;border-bottom:1px solid #33424d}.scr .sbar i{width:9px;height:9px;border-radius:50%;background:#55697a;display:inline-block}.scr .sbar i:nth-child(3){margin-right:8px}
@@ -319,7 +319,7 @@ const MID_DRUM='ellipse(7% 22% at 21% 50%)';
 const MID_OSS='polygon(27% 51%,29% 22%,34% 16%,41% 17%,48% 20%,54% 26%,52% 31%,46% 31.5%,47% 45%,55% 42%,63% 41%,67% 36.5%,70.5% 41%,70.5% 57%,66% 55%,57% 49%,47% 52%,44% 47%,39% 31%,33% 32%,31% 51%)';
 
 /* ═════ 15-2 귀의 세 부분과 소리의 길 (애니메이션) ═════ */
-P15(1,{init(L){this.im=IB(L,'ear','left:40px;top:70px;width:720px;height:480px',[['귓바퀴',12,14],['외이도',30,58],['고막',40,64],['이소골',53,24],['세반고리관',66,8],['달팽이관',77,66],['청신경',92,18],['이관',73,88]]);
+P15(1,{init(L){this.im=IB(L,'ear','left:40px;top:70px;width:720px;height:480px',[['귓바퀴',12,22],['외이도',30,58],['고막',40,64],['이소골',53,24],['세반고리관',66,17],['달팽이관',77,66],['청신경',92,22],['이관',73,88]]);
   const B=this.im.el;this.drum=VIB(B,'ear',EAR_DRUM);this.oss=VIB(B,'ear',EAR_OSS);
   const s=SVGO(B);this.W=waves(s,30,215,350);
   this.ow=sv('circle',{cx:P_(63.3,46)[0],cy:P_(63.3,46)[1],r:16,fill:'rgba(47,155,224,.35)',stroke:'#2f9be0','stroke-width':4,opacity:0},s);
@@ -327,6 +327,8 @@ P15(1,{init(L){this.im=IB(L,'ear','left:40px;top:70px;width:720px;height:480px',
   this.nv=dots(s,'M968 280 Q1050 238 1135 196',3);
   this.zn=[['외이',0,40,'#e0533f'],['중이',41,63,'#e8781e'],['내이',63,100,'#23a271']].map(a=>hdiv('zone',a[0],B,`left:${a[1]}%;width:${a[2]-a[1]}%;background:${a[3]}`));
   this.cap=hdiv('ecap ov','',B,'');
+  this.ebw=hdiv('ebw','',B,'');[['외이',0,40,'#e0533f',[['음향 에너지',0]]],['중이',41,63,'#e8781e',[['기계 에너지',1]]],['내이',63,100,'#23a271',[['유체 에너지',2],['전기생리 에너지',3]]]].forEach(z=>{const c=hdiv('ec'+(z[0]==='내이'?' in':''),'',this.ebw,'left:'+z[1]+'%;width:'+(z[2]-z[1])+'%;border-color:'+z[3]);c.innerHTML=z[4].map(s=>'<span class="es" data-i="'+s[1]+'" style="color:'+z[3]+';--c:'+z[3]+'">'+s[0]+'</span>').join('<span class="ar" style="color:'+z[3]+'">→</span>');});
+  this.es=[...this.ebw.querySelectorAll('.es')].sort((x,y)=>x.dataset.i-y.dataset.i);
   const E=[['음향 에너지','외이 · 공기 진동'],['기계 에너지','고막 · 이소골의 진동'],['유체 에너지','달팽이관 림프액의 흐름'],['전기생리 에너지','유모세포 → 청신경']];
   this.e=E.map((a,i)=>CD('',`<h3 style="font-size:23px;margin:0">${a[0]}</h3><p style="font-size:17px">${a[1]}</p>`,L,`left:800px;top:${70+i*120}px;width:430px;padding:11px 20px`));
   this.ar=[0,1,2].map(i=>hdiv('ov','▼',L,`position:absolute;left:1004px;top:${160+i*120}px;font-size:22px;color:#e8781e`));
@@ -348,7 +350,12 @@ P15(1,{init(L){this.im=IB(L,'ear','left:40px;top:70px;width:720px;height:480px',
   const ph=k<=3;const ev=[[],[0,1],[2,3],[0,1,2,3]][Math.min(3,Math.max(0,k))];
   this.e.forEach((c,i)=>{const shown=ph&&k>=1&&i<=Math.max(...ev,-1);pop(c,shown?ap(t,LS(p,0,Math.min(k,3))+0.2+(k===1||k===2?(i%2)*0.25*(LE(p,0,k)-LS(p,0,k)):0)):0);cls(c,'on',ph&&ev.includes(i)&&k<3);});
   this.ar.forEach((a,i)=>op(a,ph&&k>=1&&i<=Math.max(...ev)-1?1:0));
-  this.hl.forEach((c,i)=>pop(c,k>=4?at(t,p,4,0.05+i*0.45):0));}});
+  this.hl.forEach((c,i)=>pop(c,k>=4?at(t,p,4,0.05+i*0.45):0));
+  const tx3=p.scenes[0].L[3].tx;const fw=['음향 에너지','기계','유체','전기생리'].map(w=>Math.max(0,tx3.indexOf(w)-1)/tx3.length);
+  let ei=-1;if(k>3)ei=4;else if(k===3)fw.forEach((f,i)=>{if(t>=sub_(p,0,3,f,1))ei=i;});
+  op(this.ebw,k>=3?ap(t,LS(p,0,3),0.4):0);
+  this.es.forEach((s,i)=>{s.classList.toggle('show',ei>=i);const on=k===3&&ei===i;s.classList.toggle('on',on);s.style.background=on?s.style.getPropertyValue('--c'):'transparent';});
+  if(k===3&&ei>=0){const zm=[0,1,2,2][ei];this.zn.forEach((z,i)=>cls(z,'dim',i!==zm));this.e.forEach((c,i)=>cls(c,'on',i===ei));this.im.lbs.forEach((l,i)=>cls(l,'on',(ei===0&&i===1)||(ei===1&&(i===2||i===3))||(ei===2&&i===5)||(ei===3&&i===6)));}}});
 
 /* ═════ 15-3 외이 ═════ */
 P15(2,{init(L){this.im=IB(L,'ear','left:40px;top:76px;width:560px;height:373px');const img=this.im.el.querySelector('img');img.style.transform='scale(1.6)';img.style.transformOrigin='20% 48%';
