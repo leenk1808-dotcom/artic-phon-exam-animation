@@ -904,27 +904,84 @@ VIZ.study=(L,v)=>{const B=Vpnl(L),s=B.s;const X=[170,270,370,470],cols=['#7fb0e8
  const G2=sv('g',{opacity:0},s);Vt(G2,290,370,'지각연구: 변별 (같다 · 다르다) · 확인 (무엇?)',{'font-size':18,fill:Vcol.g});
  const G3=sv('g',{opacity:0},s);Vt(G3,290,408,'보충 · 범주적 지각: 연속 신호 → 음소 범주',{'font-size':17,fill:Vcol.p});
  return {draw(t,p,k){op(B.d,ap(t,ST(p,0)+0.1));[G0,G1,G2,G3].forEach((g,i)=>{op(g,Vrev(t,p,k,i));g.style.filter=k===i?'drop-shadow(0 0 5px rgba(240,138,36,.6))':'none';});}};};
-VIZ.tract=(L,v)=>{const B=Vpnl(L),s=B.s;
- const mk=(dx,o)=>{const g=sv('g',{opacity:0},s);Vt(g,dx+140,40,o.title,{'font-size':19,fill:o.c});
-  sv('rect',{x:dx+40,y:o.oy,width:o.ow,height:o.oh,rx:16,fill:'#fde8e3',stroke:'#d9a57e','stroke-width':3},g);
-  sv('rect',{x:dx+40+o.ow-36,y:o.oy,width:36,height:o.ph,rx:12,fill:'#fde8e3',stroke:'#d9a57e','stroke-width':3},g);
-  sv('rect',{x:dx+40+o.ow-34,y:o.oy+8,width:32,height:o.oh-10,fill:'#fde8e3'},g);
-  const vel=sv('path',{d:'M'+(dx+40+o.ow-70)+' '+(o.oy+2)+' Q'+(dx+40+o.ow-40)+' '+(o.oy+6)+' '+(dx+40+o.ow-34)+' '+(o.oy+30),fill:'none',stroke:'#b5654d','stroke-width':7,'stroke-linecap':'round'},g);
-  Vt(g,dx+40+o.ow-60,o.oy-12,'연구개',{'font-size':14,fill:'#b5654d'});Vt(g,dx+32,o.oy-12,'입술',{'font-size':14,fill:Vcol.m});
-  const lx=sv('rect',{x:dx+40+o.ow-36,y:o.oy+o.ph-4,width:36,height:18,rx:5,fill:Vcol.p},g);Vt(g,dx+40+o.ow-64,o.oy+o.ph+10,'후두',{'font-size':15,fill:Vcol.p});
-  const tg=sv('ellipse',{cx:dx+o.tx,cy:o.ty,rx:o.trx,ry:o.try,fill:'#e0897a'},g);Vt(g,dx+o.tx-20,o.ty+6,'혀',{'font-size':15,fill:'#fff'});
-  return {g,tg,vel,lx};};
- const A=mk(0,{title:'갓난아기',c:Vcol.r,oy:150,ow:200,oh:76,ph:120,tx:132,ty:196,trx:86,try:28});
- const Bq=mk(290,{title:'자라면서',c:Vcol.b,oy:140,ow:210,oh:70,ph:200,tx:118,ty:194,trx:70,try:15});
- const ul=sv('rect',{x:322,y:132,width:16,height:26,rx:6,fill:'#d9776a',opacity:0},s),ll=sv('rect',{x:322,y:190,width:16,height:26,rx:6,fill:'#d9776a',opacity:0},s);
- const ba=Vt(s,430,108,'바 · 바 · 바',{'font-size':22,fill:Vcol.o,opacity:0});const gu=Vt(s,150,118,'구 ~ 그 ~',{'font-size':22,fill:Vcol.r,opacity:0});
- const hi=sv('circle',{cx:212,cy:170,r:16,fill:'none',stroke:Vcol.o,'stroke-width':4,opacity:0},s);
- const n1=Vt(s,145,330,'울림 공간이 좁음',{'font-size':17,fill:Vcol.r,opacity:0});const n3=Vt(s,435,400,'후두 ↓ · 공간 ↑',{'font-size':17,fill:Vcol.b,opacity:0});
- const nb=Vt(s,290,428,'보충 · 일반 발달 설명',{'font-size':14,fill:Vcol.m});
- return {draw(t,p,k){op(B.d,ap(t,ST(p,0)+0.1));op(A.g,Vrev(t,p,k,1));op(n1,k===1?1:0);
-  const up=k>=2?1:0;A.tg.setAttribute('cy',196-up*12);A.tg.setAttribute('cx',132+up*16);op(gu,k===2?1:0);op(hi,k===2?0.6+0.4*Math.sin(t*6):0);
-  op(Bq.g,Vrev(t,p,k,3));op(n3,k===3?1:0);
-  const jaw=k===4?(0.5+0.5*Math.sin(t*7)):0;op(ul,k===4?1:0);op(ll,k===4?1:0);ll.setAttribute('y',(190-jaw*34).toFixed(1));op(ba,k===4?1:0);}};};
+/* ── 신경언어장애 삼킴 단면 모형 (neuro ep9) 이식 ── */
+const S1C={food:'#ffcf70',air:'#7fc8ff',warn:'#ff7e70',ok:'#71e6ac',an:'#f3c7bd',dark:'#122038',ink:'#eaf1fb'};
+const tx_=(par,x,y,t,o={})=>{const e=sv('text',Object.assign({x,y,'text-anchor':'middle',fill:'#eef3fb','font-size':24,'font-weight':700,'paint-order':'stroke',stroke:'rgba(6,10,20,.85)','stroke-width':5,'stroke-linejoin':'round'},o),par);e.textContent=t;return e;};
+const E9TK=[
+ [294,262, 300,242,360,236,430,236, 505,236,565,250,584,290, 594,320,590,352,578,372, 552,380, 500,352,420,334,340,322, 308,316,292,292],
+ [292,250, 298,230,352,250,425,252, 500,254,562,232,586,270, 594,320,590,352,578,372, 552,380, 500,352,420,334,340,322, 308,316,292,292],
+ [292,232, 300,214,350,212,420,224, 495,246,560,244,586,282, 594,320,590,352,578,372, 552,380, 500,352,420,334,340,322, 308,316,292,292],
+ [292,230, 300,212,380,210,465,214, 530,220,575,250,588,292, 596,322,590,352,578,372, 552,380, 500,352,420,334,340,322, 308,316,292,292],
+ [292,230, 300,212,380,210,470,214, 545,216,600,238,616,292, 622,324,606,354,590,374, 558,382, 500,352,420,334,340,322, 308,316,292,292]];
+function e9Tongue(P,v){v=Math.max(0,Math.min(4,v));const i=Math.min(3,Math.floor(v)),q=v-i,A=E9TK[i],B=E9TK[i+1],n=A.map((a,j)=>(a+(B[j]-a)*q).toFixed(1));
+ P.tongue.setAttribute('d','M'+n[0]+' '+n[1]+' C'+n.slice(2,8).join(' ')+' C'+n.slice(8,14).join(' ')+' C'+n.slice(14,20).join(' ')+' L'+n[20]+' '+n[21]+' C'+n.slice(22,28).join(' ')+' C'+n.slice(28,32).join(' ')+' '+n[0]+' '+n[1]+'Z');}
+function e9Velum(P,k){k=Math.max(0,Math.min(1,k));const tx=lerp(548,664,k),ty=lerp(262,212,k);
+ P.velum.setAttribute('d','M466 201 Q'+lerp(522,580,k)+' '+lerp(200,194,k)+' '+tx+' '+ty+' Q'+lerp(506,572,k)+' '+lerp(250,232,k)+' 466 215Z');}
+function e9Head(L){const s=L,g=sv('g',{transform:'translate(530 578) scale(.92) translate(-530 -578)'},s),P={};const AIR='#1b1729',TIS='#4c3644',WALL='#d8a49d',BONE='#efdcc4';
+ sv('path',{d:'M318 98 C300 110 296 125 300 142 L248 182 Q244 193 262 197 Q270 210 261 223 Q256 236 270 244 Q257 254 263 268 Q273 284 281 300 C281 332 302 350 340 360 Q402 374 470 398 L486 578 L770 578 L768 360 C792 300 800 220 780 160 C760 112 700 96 640 96 Z',fill:TIS,stroke:WALL,'stroke-width':4},g);
+ for(let y=196;y<570;y+=44)sv('rect',{x:680,y:y,width:54,height:36,rx:8,fill:'#5c4752',stroke:'#7d6670','stroke-width':2},g);
+ const lum=sv('g',{fill:AIR},g);
+ sv('path',{d:'M262 194 Q285 160 330 152 L540 150 Q600 150 640 172 Q664 190 666 232 L600 236 L560 206 L300 206 Z'},lum);
+ sv('path',{d:'M282 210 L470 208 Q540 212 592 240 L602 300 L585 300 L560 262 L300 262 Z'},lum);
+ sv('path',{d:'M586 200 L666 200 L664 300 L662 400 L656 470 L618 470 L612 398 L590 392 L582 300Z'},lum);
+ sv('path',{d:'M618 466 L656 466 L654 580 L620 580Z'},lum);sv('path',{d:'M540 200 L604 200 L604 300 L560 262 Z'},lum);
+ sv('path',{d:'M592 394 L612 394 L613 580 L556 580 L556 486 Q558 440 580 408Z'},lum);
+ const W={fill:'none',stroke:WALL,'stroke-width':3,'stroke-linecap':'round'};
+ sv('path',Object.assign({d:'M300 152 L540 150 Q600 150 640 172 Q664 190 666 232 L664 300 L662 400 L656 470 L654 580'},W),g);
+ sv('path',Object.assign({d:'M620 580 L618 470 L613 400'},W),g);
+ sv('path',Object.assign({d:'M556 580 L556 486 Q558 440 580 408'},W),g);
+ sv('path',{d:'M296 206 L470 206',stroke:BONE,'stroke-width':11,'stroke-linecap':'round'},g);
+ sv('path',{d:'M280 212 L292 212 L290 242 L282 242Z',fill:'#f6efe4'},g);sv('path',{d:'M281 248 L290 248 L292 274 L283 274Z',fill:'#f6efe4'},g);
+ sv('path',{d:'M300 290 C300 322 314 342 350 350 L470 362',fill:'none',stroke:BONE,'stroke-width':6,'stroke-linecap':'round',opacity:.45},g);
+ P.velum=sv('path',{fill:'#c9868a',stroke:'#8f4f5a','stroke-width':2.5},g);e9Velum(P,0);
+ P.tongue=sv('path',{fill:'#d98083',stroke:'#8f4f5a','stroke-width':3},g);e9Tongue(P,0);
+ P.pyr=sv('ellipse',{cx:640,cy:446,rx:14,ry:22,fill:'none',stroke:'#8d7a8c','stroke-width':2,'stroke-dasharray':'4 4'},g);
+ P.larynx=sv('g',{},g);
+ sv('path',{d:'M578 410 L548 424 L542 474 L556 488',fill:'none',stroke:'#c7b9a6','stroke-width':4,'stroke-linejoin':'round'},P.larynx);
+ for(let y=500;y<575;y+=17)sv('path',{d:'M558 '+y+' Q585 '+(y+7)+' 611 '+y,fill:'none',stroke:'#607b96','stroke-width':3},P.larynx);
+ P.hyoid=sv('ellipse',{cx:546,cy:390,rx:12,ry:6,fill:BONE,stroke:'#9b8a70','stroke-width':2},P.larynx);
+ P.fv1=sv('path',{stroke:'#b8a8bc','stroke-width':6,'stroke-linecap':'round'},P.larynx);P.fv2=sv('path',{stroke:'#b8a8bc','stroke-width':6,'stroke-linecap':'round'},P.larynx);
+ P.vf1=sv('path',{stroke:'#f2e4d7','stroke-width':7,'stroke-linecap':'round'},P.larynx);P.vf2=sv('path',{stroke:'#f2e4d7','stroke-width':7,'stroke-linecap':'round'},P.larynx);
+ P.epi=sv('path',{d:'M588 402 Q598 376 604 346 Q614 352 611 374 Q604 394 598 406Z',fill:'#f0bd8b',stroke:'#9a6557','stroke-width':2.5},P.larynx);
+ P.ues1=sv('path',{stroke:'#f8c976','stroke-width':8,'stroke-linecap':'round'},g);P.ues2=sv('path',{stroke:'#f8c976','stroke-width':8,'stroke-linecap':'round'},g);
+ P.food=sv('g',{opacity:0},g);sv('ellipse',{cx:0,cy:0,rx:17,ry:11,fill:S1C.food,stroke:'#fff1bd','stroke-width':3},P.food);sv('circle',{cx:-4,cy:-2,r:3,fill:'#fff5d4'},P.food);
+ const T=(x,y,t,o)=>tx_(g,x,y,t,Object.assign({'font-size':18},o||{}));const lead=(x1,y1,x2,y2)=>sv('path',{d:'M'+x1+' '+y1+' L'+x2+' '+y2,stroke:'#cfc2cc','stroke-width':1.5,opacity:.8},g);
+ T(468,182,'비강',{fill:'#c9d6e6'});T(372,231,'구강',{'font-size':20,fill:'#f5ddc8'});T(440,300,'혀',{'font-size':20,fill:'#3a1f26',stroke:'none'});T(380,198,'경구개',{'font-size':14,fill:'#efdcc4'});
+ lead(540,214,522,178);T(522,172,'연구개',{'font-size':15,fill:'#f2c6c8'});
+ lead(664,252,700,252);T(704,258,'인두',{'font-size':20,fill:'#f5ddc8','text-anchor':'start'});
+ lead(612,354,700,346);T(704,352,'후두개',{fill:'#f0bd8b','text-anchor':'start'});
+ lead(654,486,700,488);P.uesT=T(704,494,'UES(상부식도괄약근)',{'font-size':16,fill:'#ffd986','text-anchor':'start'});
+ lead(652,540,700,540);T(704,546,'식도',{'font-size':20,fill:'#f5ddc8','text-anchor':'start'});
+ T(534,394,'설골',{'font-size':15,fill:'#f3d8aa','text-anchor':'end'});
+ T(552,440,'가성대',{'font-size':15,fill:'#c9b8d0','text-anchor':'end'});T(552,463,'진성대',{'font-size':16,fill:'#fff0d9','text-anchor':'end'});
+ T(548,540,'기도',{'font-size':20,fill:'#9fd9ff','text-anchor':'end'});
+ P.pt={oral:[420,236],oralBack:[510,234],fauc:[575,252],oroph:[628,290],vall:[589,378],epiTop:[630,360],hypo:[638,430],pyr:[640,446],vest:[598,426],trach:[584,520],ues:[637,486],eso:[637,548],fold:458};
+ P.g=g;P.s=s;e9Air(P,.1,0,0);return P;}
+function e9Food(P,x,y,v=1){P.food.setAttribute('transform','translate('+x+' '+y+')');P.food.setAttribute('opacity',v);}
+function e9Path(P,pts,k,v=1){k=Math.max(0,Math.min(1,k));const n=pts.length-1,i=Math.min(n-1,Math.floor(k*n)),q=k*n-i;e9Food(P,lerp(pts[i][0],pts[i+1][0],q),lerp(pts[i][1],pts[i+1][1],q),v);}
+function e9Air(P,closure,lift=0,flip=0){P.larynx.setAttribute('transform','translate('+(-6*lift)+' '+(-14*lift)+')');P.epi.setAttribute('transform','rotate('+(50*flip)+' 593 404)');
+ const gap=20*(1-closure);P.vf1.setAttribute('d','M561 456 L'+(586-gap/2)+' 461');P.vf2.setAttribute('d','M611 456 L'+(588+gap/2)+' 461');
+ P.fv1.setAttribute('d','M562 436 L'+(584-gap/2)+' 441');P.fv2.setAttribute('d','M611 436 L'+(590+gap/2)+' 441');
+ const o=Math.max(0,Math.min(1,(lift-.3)/.6))*13;P.ues1.setAttribute('d','M620 486 L'+(636-o)+' 486');P.ues2.setAttribute('d','M654 486 L'+(638+o)+' 486');e9Velum(P,Math.max(lift,flip));}
+
+VIZ.tract=(L,v)=>{const d=hdiv('ov',null,L,'position:absolute;left:40px;top:76px;width:580px;height:440px;border-radius:22px;background:#17131f;border:3px solid #ead9bd;overflow:hidden');
+ const s=sv('svg',{viewBox:'232 96 700 520',preserveAspectRatio:'xMidYMid meet',style:'width:100%;height:100%'},d);
+ const P=e9Head(s);P.food.setAttribute('opacity',0);const g=P.g;
+ const T=(x,y,t,o)=>tx_(g,x,y,t,Object.assign({'font-size':22},o||{}));
+ const lipU=sv('ellipse',{cx:252,cy:203,rx:17,ry:10,fill:'#e48a86',stroke:'#8f4f5a','stroke-width':2.5,opacity:0},g),lipL=sv('ellipse',{cx:252,cy:226,rx:17,ry:10,fill:'#e48a86',stroke:'#8f4f5a','stroke-width':2.5,opacity:0},g);
+ const sp=sv('path',{d:'M300 214 L560 214 L560 258 L300 258 Z',fill:'#ff7e70',opacity:0},g);
+ const hi=sv('circle',{cx:560,cy:244,r:22,fill:'none',stroke:'#ffcf70','stroke-width':5,opacity:0},g);
+ const tGu=T(470,128,'구 ~ 그 ~',{'font-size':30,fill:'#ffcf70'}),tBa=T(420,126,'바 · 바 · 바',{'font-size':30,fill:'#ffcf70'});const tLip=T(268,290,'입술',{'font-size':18,fill:'#f2c6c8'}),tCl=T(640,126,'닫힘 = 자음',{'font-size':20,fill:'#ffcf70'}),tOp=T(640,126,'열림 = 모음',{'font-size':20,fill:'#9fd9ff'});[tLip,tCl,tOp].forEach(e=>op(e,0));
+ const tNb=T(420,128,'갓난아기: 혀가 입안 가득',{fill:'#ff9a8a'}),tLx=T(330,470,'후두가 높음 ↑',{fill:'#ff9a8a','font-size':20});
+ const tGr=T(420,128,'자라면서: 후두 ↓ · 공간 ↑',{fill:'#9fd9ff'}),tGr2=T(360,520,'후두 ↓',{fill:'#9fd9ff','font-size':20}),arD=sv('path',{d:'M440 430 L440 486 M430 472 L440 488 L450 472',stroke:'#9fd9ff','stroke-width':5,fill:'none','stroke-linecap':'round',opacity:0},g);
+ const cap=hdiv('',"보충 · 모식도 (신경언어장애 삼킴 단면 모형)",d,'position:absolute;left:0;right:0;bottom:8px;text-align:center;font-size:14px;font-weight:700;color:#b9aec4');
+ [tGu,tBa,tNb,tLx,tGr,tGr2].forEach(e=>op(e,0));
+ return {draw(t,p,k){op(d,ap(t,ST(p,0)+0.1));
+  const tv=k===1?3.6:k===2?1:0;e9Tongue(P,tv);e9Air(P,0.15,0,0);e9Velum(P,0);P.larynx.setAttribute('transform',k===1?'translate(-4 -20)':'translate(0 0)');
+  op(tNb,k===1?1:0);op(tLx,k===1?1:0);
+  op(hi,k===2?0.6+0.4*Math.sin(t*6):0);op(tGu,k===2?1:0);
+  op(tGr,k===3?1:0);op(tGr2,k===3?1:0);op(arD,k===3?1:0);
+  const jaw=k===4?(0.5+0.5*Math.sin(t*7)):0;op(lipU,k===4?1:0);op(lipL,k===4?1:0);lipL.setAttribute('cy',(222+jaw*26).toFixed(1));lipU.setAttribute('cy',(203-jaw*3).toFixed(1));op(tBa,k===4?1:0);op(tLip,k===4?1:0);op(tCl,k===4&&jaw<0.25?1:0);op(tOp,k===4&&jaw>0.75?1:0);}};};
 VIZ.rank=(L,v)=>{const B=Vpnl(L),s=B.s;const R=v.rows,n=R.length;const notes=v.notes||[];const nh=notes.reduce((a,q)=>a+(q[2]||20)+14,notes.length?8:0);const rh=Math.min(100,(424-nh)/n);
  const els=R.map((r,i)=>{const g=sv('g',{opacity:0},s);const y=12+i*rh;Vt(g,24,y+20,r[0],{'font-size':16,fill:r[3]||Vcol.k,'text-anchor':'start'});
   const sep=r[5]||'>';let fs=19;const tw=f=>r[1].reduce((a,c)=>a+[...c].length*f*0.92+28,0)+(r[1].length-1)*(f+8);while(tw(fs)>536&&fs>13)fs--;
